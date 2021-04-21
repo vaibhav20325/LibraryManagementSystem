@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+{% block title %}View Book{% endblock %}
+
+{% block content %}
+<p>
+    Title : {{book.title}} <br>
+    Author : {{book.author}} <br>
+    Publisher : {{book.publisher}} <br>
+    Genre : {{book.genre}} <br>
+    Summary : {{book.summary}} <br>
+    ISBN : {{book.isbn}} <br>
+    Location : {{book.location}} <br>
+    Available : {{book.availability}} <br>
+</p>
+
+{% endblock %}

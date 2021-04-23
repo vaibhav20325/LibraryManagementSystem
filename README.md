@@ -1,4 +1,6 @@
 # LibraryManagementSystem
 
-Made by: Vaibhav Agarwal
+### Django Project
+
+### Made by: Vaibhav Agarwal
 

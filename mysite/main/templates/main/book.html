@@ -16,12 +16,12 @@
 </div>
 
 <div>
-    <form method="post" action="/" class="form-group">
+    <form method="post" action="#">
         {% csrf_token %}
         <div> 
-              {{form}}
-              <div>
-                <button name="request" type="submit">Request</button>
+            {{form}}
+            <div>
+                <button name="request" value = "request" type="submit">Request</button>
             </div>
         </div>
     </form>

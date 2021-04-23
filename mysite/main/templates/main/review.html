@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+{% block title %}Review{% endblock %}
+ 
+{% block content %}
+    <h1>Review Requests</h1>
+    <form method="post" action="#">
+    {% csrf_token %}
+        <ul>
+            {% for request in reqs %}
+                <label for="c{{request.id}}">Select:</label>
+                <select name="c{{request.id}}" id="c{{request.id}}">
+                    <option value="accept">Accept</option>
+                    <option value="reject">Reject</option>
+                </select>
+                <b>Book :</b> {{request.book.title}} 
+                <b>User :</b> {{request.user}}
+                <b>Due Date :</b> {{request.d_date}}
+                <b>Request Date :</b> {{request.r_date}}
+                <br>
+            {% endfor %}
+        </ul>
+        <button type="submit", name="save", value="save">Save</button>
+    </form>
+{% endblock %}

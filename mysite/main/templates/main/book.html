@@ -2,15 +2,29 @@
 {% block title %}View Book{% endblock %}
 
 {% block content %}
-<p>
-    Title : {{book.title}} <br>
-    Author : {{book.author}} <br>
-    Publisher : {{book.publisher}} <br>
-    Genre : {{book.genre}} <br>
-    Summary : {{book.summary}} <br>
-    ISBN : {{book.isbn}} <br>
-    Location : {{book.location}} <br>
-    Available : {{book.availability}} <br>
-</p>
+<div>
+    <p>
+        Title : {{book.title}} <br>
+        Author : {{book.author}} <br>
+        Publisher : {{book.publisher}} <br>
+        Genre : {{book.genre}} <br>
+        Summary : {{book.summary}} <br>
+        ISBN : {{book.isbn}} <br>
+        Location : {{book.location}} <br>
+        Available : {{book.availability}} <br>
+    </p>
+</div>
+
+<div>
+    <form method="post" action="/" class="form-group">
+        {% csrf_token %}
+        <div> 
+              {{form}}
+              <div>
+                <button name="request" type="submit">Request</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

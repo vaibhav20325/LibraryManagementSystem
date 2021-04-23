@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{user}}</h1>
+    <b>Username :</b> {{user.username}} <br>
+    <b>Email :</b> {{user.email}} <br>
+
+    <b>Upcoming Due Dates:</b> <br>
+    <ul>
+        {% for request in user.request.all %}
+        {% if request.status == "Issued" %}
+            <li>
+                {{request.book}}
+                {{request.d_date}}
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    
+
+    <b>Pending Requests:</b> <br>
+    <ul>
+        {% for request in user.request.all %}
+        {% if request.status == "Pending" %}
+            <li>
+                {{request.book}}
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    <b>Books borrowed and returned: <br>
+    <ul>
+        {% for request in user.request.all %}
+        {% if request.status == "Returned" %}
+            <li>
+                {{request.book}}
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Book, Request
 from .forms import BorrowRequest
 import datetime
@@ -8,7 +8,9 @@ import datetime
 # Create your views here.
 
 def home(response):
-	return render(response, "main/home.html", {})
+	books = Book.objects.all()
+
+	return render(response, "main/home.html", {"books":books})
 
 def index(response, id):
 	book = Book.objects.get(id=id)
@@ -30,6 +32,15 @@ def index(response, id):
 	return render(response, "main/book.html", {"book":book , "form":form})
 
 def review(response):
-	reqs = Request.objects.filter(status = "Pending")
-	return render(response, "main/review.html", {"reqs":reqs})	
+	if response.user.is_staff:
+		reqs = Request.objects.filter(status = "Pending")
+		return render(response, "main/review.html", {"reqs":reqs})
+	else:
+		return HttpResponseRedirect("/")
+
+def profile(response):
+	if response.user.is_authenticated:
+		return render(response, "main/profile.html", {"user": response.user})
+	else: 
+		return HttpResponseRedirect("/login")
 

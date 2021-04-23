@@ -6,4 +6,8 @@ Home
 
 {% block content %}
 <h1>Home Page</h1>
+<h3>All Books</h3>
+    {% for book in books %}
+        <a href = "/{{book.id}}" >{{book.title}}</a> <br>
+    {% endfor %}
 {% endblock %}

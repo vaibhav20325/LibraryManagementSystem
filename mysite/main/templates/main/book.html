@@ -17,7 +17,7 @@
 </div>
 
 <div>
-    {% if book.availability %}
+    {% if book.availability and user.is_authenticated%}
     <form method="post" action="#">
         {% csrf_token %}
         <div> 
@@ -31,6 +31,7 @@
 </div>
 
 <div>
+    {% if user.is_authenticated %}
     <form method="post" action="#">
         {% csrf_token %}
         <div>
@@ -55,6 +56,7 @@
             </div>
         </div>
     </form>
+    {% endif %}
 </div>
 
 <div>

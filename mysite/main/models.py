@@ -14,6 +14,7 @@ class Book(models.Model):
     location = models.CharField(max_length = 200)
     availability = models.BooleanField()
     status = models.CharField(max_length = 10, default = 'returned')
+    date_added = models.DateField(null = True)
     def __str__(self):
         return self.title
 

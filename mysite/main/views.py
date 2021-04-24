@@ -4,28 +4,48 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Book, Request, Rating
 from .forms import BorrowRequest
 import datetime
+from django.db.models import Exists, OuterRef, Count
+from django.db.models.functions import Length
 
 # Create your views here.
 
 def home(response):
 	books = Book.objects.all()
+
+	d={}
+	for book in books:
+		a = len(Request.objects.filter(book = book ,status = 'Returned'))
+		if a not in d:
+			d[a] = []
+		d[a].append(book)
+	
+	temp = sorted(d.keys(), reverse = True)
+	popular = []
+	for i in range(0,3):
+		popular.extend(d[temp[i]])
+
 	if response.method == "GET":
 		if response.GET.get("search"):
 			searchby = response.GET.get("searchby")
 			query = response.GET.get("query")
-
-			'''
-			getattr()
-			setattr()
-			hasattr()
-			'''
-
 			filter_params = {
 				searchby: query
 			}
 			b = Book.objects.filter(**filter_params)
 			books = b
-	return render(response, "main/home.html", {"books":books})
+	new = Book.objects.order_by('date_added')[::-1]
+	new = new[0:3]
+	
+	
+
+	
+	'''
+	popular = Book.objects.order_by(
+		Count(Request.objects.filter(status = 'Returned'))
+	)
+	print(popular)
+	'''
+	return render(response, "main/home.html", {"books":books, "new": new, "popular":popular})
 
 def index(response, id):
 	book = Book.objects.get(id=id)
@@ -63,7 +83,7 @@ def index(response, id):
 	except:
 		rating = ''
 
-	return render(response, "main/book.html", {"book":book , "form":form, "rating":rating, "review":list_review})
+	return render(response, "main/book.html", {"book":book , "form":form, "rating":rating, "review":list_review, "user":response.user})
 
 def review(response):
 	if response.user.is_staff:

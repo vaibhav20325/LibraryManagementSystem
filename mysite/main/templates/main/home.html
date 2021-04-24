@@ -14,7 +14,7 @@ Home
             <option value="publisher">Publisher</option>
             <option value="author">Author</option>
             <option value="genre">Genre</option>
-            <option value="isnb">ISBN</option>
+            <option value="isbn">ISBN</option>
         </select>
         <input type = 'text' name = 'query' id = 'query'>
         <button type="submit", name="search", value="search">Search</button>
@@ -22,6 +22,15 @@ Home
 
 <h3>Books</h3>
     {% for book in books %}
+        <a href = "/{{book.id}}" >{{book.title}}</a> <br>
+    {% endfor %}
+
+<h3>Newest Arrivals</h3>
+    {% for book in new %}
+        <a href = "/{{book.id}}" >{{book.title}}</a> <br>
+    {% endfor %}
+<h3>Popular Books</h3>
+    {% for book in popular %}
         <a href = "/{{book.id}}" >{{book.title}}</a> <br>
     {% endfor %}
 {% endblock %}

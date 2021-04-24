@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Book, Request
+from .models import Book, Request, Rating
 from .forms import BorrowRequest
 import datetime
 
@@ -9,18 +9,44 @@ import datetime
 
 def home(response):
 	books = Book.objects.all()
+	if response.method == "GET":
+		if response.GET.get("search"):
+			searchby = response.GET.get("searchby")
+			query = response.GET.get("query")
 
+			'''
+			getattr()
+			setattr()
+			hasattr()
+			'''
+
+			filter_params = {
+				searchby: query
+			}
+			b = Book.objects.filter(**filter_params)
+			books = b
 	return render(response, "main/home.html", {"books":books})
 
 def index(response, id):
 	book = Book.objects.get(id=id)
 	if response.method == "POST":
-		form = BorrowRequest(response.POST)
-		if form.is_valid():
-			t = form.cleaned_data['time']
-			req = Request(book = book, status = 'Pending', r_date = datetime.date.today(), d_date = datetime.date.today() + datetime.timedelta(t) )
-			req.save()
-			response.user.request.add(req)
+		if response.POST.get("request"):
+			form = BorrowRequest(response.POST)
+			if form.is_valid():
+				t = form.cleaned_data['time']
+				req = Request(book = book, status = 'Pending', r_date = datetime.date.today(), d_date = datetime.date.today() + datetime.timedelta(t) )
+				req.save()
+				response.user.request.add(req)
+		
+		elif response.POST.get("rate"):
+			rev = response.POST.get('review').strip()
+			star = response.POST.get('rating')
+			r = Rating(review = rev, rating = int(star))
+			r.save()
+			response.user.rating.add(r)
+			book.rating.add(r)
+			return render(response, "main/home.html", {})
+		
 		'''
 		if response.POST.get("request"):
 			t = response.POST.get("time")
@@ -29,11 +55,38 @@ def index(response, id):
 		'''
 	else:
 		form = BorrowRequest()
-	return render(response, "main/book.html", {"book":book , "form":form})
+	r = book.rating.all()
+	list_rating = [x.rating for x in r]
+	list_review = [x.review for x in r if x.review.strip() != '']
+	try:
+		rating = round(sum(list_rating)/len(list_rating),2)
+	except:
+		rating = ''
+
+	return render(response, "main/book.html", {"book":book , "form":form, "rating":rating, "review":list_review})
 
 def review(response):
 	if response.user.is_staff:
 		reqs = Request.objects.filter(status = "Pending")
+		
+		if response.method == "POST":
+			if response.POST.get("save"):
+				for req in reqs:
+					r = response.POST.get("c" + str(req.id))
+					if r == 'accept':
+						req.status = 'Issued'
+						# if quantity of each book is 1
+						b = Book.objects.filter(title=req.book)
+						b=b[0]
+						b.availability = False
+						b.status = 'Issued'
+						b.save()
+						req.save()
+					elif r == 'reject':
+						req.status = 'Rejected'
+						req.save()
+				reqs = Request.objects.filter(status = "Pending")
+					
 		return render(response, "main/review.html", {"reqs":reqs})
 	else:
 		return HttpResponseRedirect("/")

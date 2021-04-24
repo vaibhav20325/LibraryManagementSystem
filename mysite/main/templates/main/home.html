@@ -6,7 +6,21 @@ Home
 
 {% block content %}
 <h1>Home Page</h1>
-<h3>All Books</h3>
+    <form method="get" action="#">
+    {% csrf_token %}
+        <label for="searchby">Select:</label>
+        <select name="searchby" id="searchby">
+            <option value="title">Title</option>
+            <option value="publisher">Publisher</option>
+            <option value="author">Author</option>
+            <option value="genre">Genre</option>
+            <option value="isnb">ISBN</option>
+        </select>
+        <input type = 'text' name = 'query' id = 'query'>
+        <button type="submit", name="search", value="search">Search</button>
+    </form>
+
+<h3>Books</h3>
     {% for book in books %}
         <a href = "/{{book.id}}" >{{book.title}}</a> <br>
     {% endfor %}

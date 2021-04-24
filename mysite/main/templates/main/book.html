@@ -12,6 +12,7 @@
         ISBN : {{book.isbn}} <br>
         Location : {{book.location}} <br>
         Available : {{book.availability}} <br>
+        Rating : {{rating}}
     </p>
 </div>
 
@@ -27,6 +28,43 @@
         </div>
     </form>
     {% endif %}
+</div>
+
+<div>
+    <form method="post" action="#">
+        {% csrf_token %}
+        <div>
+            <p>Rate:</p>
+            <input type="radio" id="r1" name="rating" value="1">
+            <label for="r1">1</label>
+            <input type="radio" id="r2" name="rating" value="2">
+            <label for="r2">2</label>
+            <input type="radio" id="r3" name="rating" value="3">
+            <label for="r3">3</label>
+            <input type="radio" id="r4" name="rating" value="4">
+            <label for="r4">4</label>
+            <input type="radio" id="r5" name="rating" value="5">
+            <label for="r5">5</label><br>
+
+            <label for = 'review'>Review:</label><br>
+            <textarea id = 'review' name = 'review' rows = '5' cols = '60'>
+                
+            </textarea>
+            <div>
+                <button name="rate" value = "rate" type="submit">Rate</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <p>Reviews:</p>
+    <ul>
+        {% for rev in review %}
+        <li>{{rev}}</li><br>
+        {% endfor %}
+    </ul>
+
 </div>
 
 {% endblock %}

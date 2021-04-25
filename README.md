@@ -21,3 +21,14 @@ The project has the following pages
 /review
 
 /{book_id}
+
+**DataBase**
+
+There are 3 custom classes :
+
+* Book
+
+* Request
+
+* Rating
+

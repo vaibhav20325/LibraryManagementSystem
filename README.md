@@ -14,17 +14,35 @@ A Librarian can edit the books from the Admin Portal.
 
 The project has the following pages
 
-/
+**/**
 
-/admin
+This is the Home Page where the user can see all the book, newly arrived books, and popular books. The user can also 
+Search for a book by mentioning either its Title, Publisher, Author, Genre or ISBN code.
 
-/register
+**/admin**
 
-/login
+This is the Default Admin Portal.
 
-/review
+**/register**
 
-/{book_id}
+This is the registration page where a new user can register.
+
+**/login**
+
+This is the login page where existing users can login.
+
+**/logout**
+
+This logs out the user and redirects the user to the Home Page.
+
+**/review**
+
+This is the page where Librarians or admin can see all the Pending requests and either Accept or Reject them.
+This page is only visible to staff members, so only the users having staff status can access this page.
+
+**/{book_id}**
+
+There exists a page for every book where all the details of the book can be seen along with its rating and reviews.
 
 **DataBase**
 

@@ -25,7 +25,8 @@ The project has the following pages
 **/**
 
 This is the Home Page where the user can see all the book, newest arrivals, and popular books. The user can also 
-Search for a book by mentioning either its Title, Publisher, Author, Genre or ISBN code.
+Search for a book by mentioning either its Title, Publisher, Author, Genre or ISBN code. Currently the Search would 
+look for exact matches in the database.
 
 http://vaibhavlib.herokuapp.com/
 

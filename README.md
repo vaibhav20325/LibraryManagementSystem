@@ -81,7 +81,7 @@ http://vaibhavlib.herokuapp.com/profile/
 
 ### **DataBase**
 
-Database used sqlite
+Database used sqlite3
 
 There are 3 custom classes :
 
@@ -132,6 +132,10 @@ I have created HTML pages for all the pages that extend from a template page bas
 
 The user is interacting with the pages through forms, which sends the responses to a python file view.py inside the main app, which processes these responses and make
  appropriate mmodifications.
+ 
+ The Librarian can mark a book as lost using the Admin Portal. Currently, for a user to return an issued book, the Librarian would have to make the appropriate changes in the Admin Portal.
+ 
+ Currently I have assumed quantity of each book as 1. So if a book is issued to a user then it automatically becomes unavailable.
  
  **Bugs**
  

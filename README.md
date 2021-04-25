@@ -97,8 +97,18 @@ Rating Object has the following fields:
 * rating
 * review
 
-
-I have mainly used forms with POST method for all the buttons except the search button on the home page which uses GET method
+**Access Control**
 
 I have implemented Access control by using the Django methods .is_authenticated which returns False if the user is not logged in i.e. Anonymous User
 and .is_staff which checks if the user has staff access (The Librarian and Admin are the only ones with staff status) . I have used these to restrict part of the pages from the users.
+
+**Other Stuff**
+
+The project has two apps - main and register. Register is for the registration stuff, main is for everything else.
+
+I have mainly used forms with POST method for all the buttons except the search button on the home page which uses GET method
+
+I have created HTML pages for all the pages that extend from a template page base.html
+
+The user is interacting with the pages through forms, which sends the responses to a python file view.py inside the main app, which processes these responses and make
+ appropriate mmodifications.

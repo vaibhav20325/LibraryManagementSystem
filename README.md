@@ -99,3 +99,6 @@ Rating Object has the following fields:
 
 
 I have mainly used forms with POST method for all the buttons except the search button on the home page which uses GET method
+
+I have implemented Access control by using the Django methods .is_authenticated which returns False if the user is not logged in i.e. Anonymous User
+and .is_staff which checks if the user has staff access (The Librarian and Admin are the only ones with staff status) . I have used these to restrict part of the pages from the users.

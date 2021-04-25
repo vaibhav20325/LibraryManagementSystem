@@ -16,12 +16,13 @@ The project has the following pages
 
 **/**
 
-This is the Home Page where the user can see all the book, newly arrived books, and popular books. The user can also 
+This is the Home Page where the user can see all the book, newest arrivals, and popular books. The user can also 
 Search for a book by mentioning either its Title, Publisher, Author, Genre or ISBN code.
 
 **/admin**
 
-This is the Default Admin Portal.
+This is the Default Admin Portal. Only the Admin and Librarians can access this page. Admins can access everything on
+this page but the Librarians can only access and edit the Books.
 
 **/register**
 
@@ -43,14 +44,26 @@ This page is only visible to staff members, so only the users having staff statu
 **/{book_id}**
 
 There exists a page for every book where all the details of the book can be seen along with its rating and reviews.
+If you are an Anonymous User this is all what you will see. If you are logged in then if the book is available then 
+you can request to issue it for a certain number of days by clicking the Request Button. If you have already issued
+the book then you will see the Renew Button to request extension of the due date by a certain number of days. If the book 
+is not available then the Request Button would not be visible. Logged in users can Rate the book and write a comment but only once.
+They can see the appropriate fields only if they haven't reviewed the book yet.
 
-**DataBase**
+**/profile**
+
+This is the profile page where Logged in users can see their basic information, upcoming deadlines, pending requests, 
+and books that they have borrowed and returned. Anonymous users can't access this page.
+
+###**DataBase**
 
 There are 3 custom classes :
 
-* Book
+* **Book**
 
-* Request
 
-* Rating
+
+* **Request**
+
+* **Rating**
 

@@ -8,6 +8,12 @@ The Project is hosted on Heroku at http://vaibhavlib.herokuapp.com/
 
 (Note: I have not committed the changes that I had to make to host it on Heroku)
 
+The Admin has username admin and password admin
+
+There are 5 users user1, user2, user3, user4, user5 with passwords pass1, pass2, pass3, pass4, pass5 respectively.
+
+User 1 is a Librarian.
+
 Admin can make a user a librarian by assigning the user staff member and the group Librarian using the Admin Portal.
 
 A Librarian can edit the books from the Admin Portal.
@@ -91,3 +97,5 @@ Rating Object has the following fields:
 * rating
 * review
 
+
+I have mainly used forms with POST method for all the buttons except the search button on the home page which uses GET method

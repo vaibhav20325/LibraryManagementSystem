@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Book, Request, Rating
-from .forms import BorrowRequest
+from .forms import BorrowRequest, BorrowRenew
 import datetime
 from django.db.models import Exists, OuterRef, Count
 from django.db.models.functions import Length
@@ -36,9 +36,6 @@ def home(response):
 	new = Book.objects.order_by('date_added')[::-1]
 	new = new[0:3]
 	
-	
-
-	
 	'''
 	popular = Book.objects.order_by(
 		Count(Request.objects.filter(status = 'Returned'))
@@ -48,7 +45,15 @@ def home(response):
 	return render(response, "main/home.html", {"books":books, "new": new, "popular":popular})
 
 def index(response, id):
+	
 	book = Book.objects.get(id=id)
+	
+	try:
+		r = response.user.request.filter(book = book, status = 'Issued')[0]
+		temp_bool = True
+	except:
+		temp_bool = False
+
 	if response.method == "POST":
 		if response.POST.get("request"):
 			form = BorrowRequest(response.POST)
@@ -58,6 +63,18 @@ def index(response, id):
 				req.save()
 				response.user.request.add(req)
 		
+		elif response.POST.get("renew"):
+			form = BorrowRenew(response.POST)
+			if form.is_valid():
+				t = form.cleaned_data['time']
+				if temp_bool:
+					r = response.user.request.filter(book = book, status = 'Issued')[0]
+					req = Request(book = book, status = 'Pending', r_date = datetime.date.today(), d_date = r.d_date + datetime.timedelta(t) )
+					req.save()
+					response.user.request.add(req)
+				
+				
+
 		elif response.POST.get("rate"):
 			rev = response.POST.get('review').strip()
 			star = response.POST.get('rating')
@@ -83,7 +100,7 @@ def index(response, id):
 	except:
 		rating = ''
 
-	return render(response, "main/book.html", {"book":book , "form":form, "rating":rating, "review":list_review, "user":response.user})
+	return render(response, "main/book.html", {"book":book , "form":form, "rating":rating, "review":list_review, "user":response.user, "temp_bool":temp_bool})
 
 def review(response):
 	if response.user.is_staff:

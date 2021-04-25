@@ -47,7 +47,13 @@ def home(response):
 def index(response, id):
 	
 	book = Book.objects.get(id=id)
-	
+	rated = False
+	try:
+		if Rating.objects.filter(user = response.user, book = book):
+			rated = True
+	except:
+		pass
+
 	try:
 		r = response.user.request.filter(book = book, status = 'Issued')[0]
 		temp_bool = True
@@ -82,7 +88,8 @@ def index(response, id):
 			r.save()
 			response.user.rating.add(r)
 			book.rating.add(r)
-			return render(response, "main/home.html", {})
+			return HttpResponseRedirect("/")
+			#return render(response, "main/home.html", {})
 		
 		'''
 		if response.POST.get("request"):
@@ -100,7 +107,7 @@ def index(response, id):
 	except:
 		rating = ''
 
-	return render(response, "main/book.html", {"book":book , "form":form, "rating":rating, "review":list_review, "user":response.user, "temp_bool":temp_bool})
+	return render(response, "main/book.html", {"book":book , "form":form, "rating":rating, "review":list_review, "user":response.user, "temp_bool":temp_bool, "rated":rated})
 
 def review(response):
 	if response.user.is_staff:

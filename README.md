@@ -55,15 +55,39 @@ They can see the appropriate fields only if they haven't reviewed the book yet.
 This is the profile page where Logged in users can see their basic information, upcoming deadlines, pending requests, 
 and books that they have borrowed and returned. Anonymous users can't access this page.
 
-###**DataBase**
+### **DataBase**
 
 There are 3 custom classes :
 
-* **Book**
+**Book**
+
+Book Object has the following fields:
+* title
+* author
+* publisher
+* genre
+* summary
+* isbn
+* location
+* availability
+* status
+* date_added
 
 
+**Request**
 
-* **Request**
+Request Object has the following fields:
+* user (This is a foreign key)
+* status
+* r_date (request date)
+* d_date (due date)
+* book
 
-* **Rating**
+**Rating**
+
+Rating Object has the following fields:
+* user (This is a foreign key)
+* book (This is a foreign key)
+* rating
+* review
 

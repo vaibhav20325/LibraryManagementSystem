@@ -12,6 +12,8 @@ The project has the following pages
 
 /
 
+/admin
+
 /register
 
 /login

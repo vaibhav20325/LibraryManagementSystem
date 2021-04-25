@@ -112,3 +112,7 @@ I have created HTML pages for all the pages that extend from a template page bas
 
 The user is interacting with the pages through forms, which sends the responses to a python file view.py inside the main app, which processes these responses and make
  appropriate mmodifications.
+ 
+ **Bugs**
+ 
+ The renew system isn't working perfectly currently. I haven't taken into account random inputs by the users like requesting a book for -3 days. 

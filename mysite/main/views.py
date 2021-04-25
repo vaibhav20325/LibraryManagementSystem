@@ -21,8 +21,9 @@ def home(response):
 	
 	temp = sorted(d.keys(), reverse = True)
 	popular = []
-	for i in range(0,3):
-		popular.extend(d[temp[i]])
+	if len(temp)>=3:
+		for i in range(0,3):
+			popular.extend(d[temp[i]])
 
 	if response.method == "GET":
 		if response.GET.get("search"):
